@@ -1,11 +1,208 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel="stylesheet" href="/stylesheets/style.css" />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
-</html>
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content fade-up">
+      <div class="hero-eyebrow">Limited Time Offer</div>
+      <h1 class="hero-title">
+        Lumina Pro<br /><span>35% OFF</span>
+      </h1>
+      <p class="hero-description">
+        Experience the pinnacle of sound with the Lumina Ultra-Bass Wireless Headphones.
+        Premium ANC technology for half the price. Today only.
+      </p>
+      <div class="hero-actions">
+        <a href="/deals" class="btn btn-primary btn-lg">Shop the Deal →</a>
+        <a href="/shop" class="btn btn-outline btn-lg">Browse All Products</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-value">50K+</div>
+          <div class="hero-stat-label">Happy Customers</div>
+        </div>
+        <div>
+          <div class="hero-stat-value">4.9★</div>
+          <div class="hero-stat-label">Average Rating</div>
+        </div>
+        <div>
+          <div class="hero-stat-value">200+</div>
+          <div class="hero-stat-label">Premium Brands</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">Shop by Category</h2>
+        <p class="section-subtitle">Find exactly what you're looking for</p>
+      </div>
+      <a href="/shop" class="btn btn-outline">View All →</a>
+    </div>
+    <div class="categories-grid">
+      <a href="/shop?category=audio" class="category-card">
+
+        <div class="category-name">Audio</div>
+        <div class="category-count">142 products</div>
+      </a>
+      <a href="/shop?category=wearables" class="category-card">
+
+        <div class="category-name">Wearables</div>
+        <div class="category-count">89 products</div>
+      </a>
+      <a href="/shop?category=phones" class="category-card">
+
+        <div class="category-name">Smartphones</div>
+        <div class="category-count">210 products</div>
+      </a>
+      <a href="/shop?category=vr" class="category-card">
+
+        <div class="category-name">VR & Gaming</div>
+        <div class="category-count">67 products</div>
+      </a>
+      <a href="/shop?category=tablets" class="category-card">
+
+        <div class="category-name">Tablets</div>
+        <div class="category-count">54 products</div>
+      </a>
+      <a href="/shop?category=cinema" class="category-card">
+
+        <div class="category-name">Home Cinema</div>
+        <div class="category-count">38 products</div>
+      </a>
+      <a href="/shop?category=photo" class="category-card">
+
+        <div class="category-name">Photography</div>
+        <div class="category-count">93 products</div>
+      </a>
+      <a href="/shop?category=accessories" class="category-card">
+
+        <div class="category-name">Accessories</div>
+        <div class="category-count">320 products</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FLASH SALE -->
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="timer-bar">
+      <div class="timer-label">Flash Sale — Discounts refresh every 24 hours</div>
+      <div class="timer-blocks">
+        <div class="timer-block">
+          <div class="timer-number" data-timer="h">18</div>
+          <div class="timer-unit">HRS</div>
+        </div>
+        <span class="timer-sep">:</span>
+        <div class="timer-block">
+          <div class="timer-number" data-timer="m">42</div>
+          <div class="timer-unit">MIN</div>
+        </div>
+        <span class="timer-sep">:</span>
+        <div class="timer-block">
+          <div class="timer-number" data-timer="s">07</div>
+          <div class="timer-unit">SEC</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">Today's Flash Deals</h2>
+        <p class="section-subtitle">Limited stock — grab yours before it's gone</p>
+      </div>
+      <a href="/deals" class="btn btn-outline">See All Deals →</a>
+    </div>
+
+    <div class="product-grid">
+      <% if (locals.flashProducts && flashProducts.length> 0) { %>
+        <% flashProducts.forEach(function(product) { %>
+          <a href="/product/<%= product.slug %>" style="text-decoration: none; color: inherit;">
+            <div class="card">
+              <div class="card-img" style="background: #1a2234; overflow: hidden; height: 180px;">
+                <% if (product.mainImageUrl) { %>
+                  <img src="<%= product.mainImageUrl %>" alt="<%= product.name %>"
+                    style="width:100%; height:100%; object-fit:cover;" />
+                  <% } else { %>
+                    <div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:3.5rem;">
+                      <%= product.icon || '📦' %>
+                    </div>
+                    <% } %>
+              </div>
+              <div class="card-body">
+                <% if (product.badge) { %>
+                  <span class="badge <%= product.badgeClass || 'badge-accent' %> mb-1">
+                    <%= product.badge %>
+                  </span>
+                  <% } %>
+                    <div class="card-title">
+                      <%= product.name %>
+                    </div>
+                    <div class="card-subtitle">
+                      <%= product.brand %>
+                    </div>
+                    <div>
+                      <span class="card-price">
+                        <%= product.price %>
+                      </span>
+                      <% if (product.was) { %>
+                        <span class="card-price-old">
+                          <%= product.was %>
+                        </span>
+                        <% } %>
+                    </div>
+              </div>
+            </div>
+          </a>
+          <% }); %>
+            <% } else { %>
+              <p>No flash deals available at the moment.</p>
+              <% } %>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED PROMOS -->
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem;">
+      <div
+        style="background:linear-gradient(135deg,rgba(124,111,255,0.15),rgba(19,236,109,0.08));border:1px solid var(--dark-border);border-radius:var(--radius-lg);padding:2rem;">
+        <div style="font-size:1.1rem;font-weight:800;margin-bottom:0.3rem;">Home Cinema</div>
+        <div style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:1rem;">Up to 40% Off</div>
+        <a href="/shop?category=cinema" class="btn btn-outline btn-sm">Shop Now →</a>
+      </div>
+      <div
+        style="background:linear-gradient(135deg,rgba(19,236,109,0.12),rgba(0,180,100,0.06));border:1px solid rgba(19,236,109,0.2);border-radius:var(--radius-lg);padding:2rem;">
+        <div style="font-size:1.1rem;font-weight:800;margin-bottom:0.3rem;">Smartphones</div>
+        <div style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:1rem;">Flash Trade-ins</div>
+        <a href="/shop?category=phones" class="btn btn-outline btn-sm">Shop Now →</a>
+      </div>
+      <div
+        style="background:linear-gradient(135deg,rgba(255,165,2,0.1),rgba(255,71,87,0.06));border:1px solid var(--dark-border);border-radius:var(--radius-lg);padding:2rem;">
+        <div style="font-size:1.1rem;font-weight:800;margin-bottom:0.3rem;">Photography</div>
+        <div style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:1rem;">Bundle Savings</div>
+        <a href="/shop?category=photo" class="btn btn-outline btn-sm">Shop Now →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="newsletter-section">
+      <h2 class="newsletter-title">Subscribe for Exclusive Early Access</h2>
+      <p class="newsletter-subtitle">Join our VIP list and get deals 2 hours before the public. Never miss a sell-out
+        item again.</p>
+      <form class="newsletter-form" onsubmit="return false;">
+        <input class="newsletter-input" type="email" placeholder="Enter your email address" />
+        <button class="btn btn-primary">Join VIP List</button>
+      </form>
+    </div>
+  </div>
+</section>

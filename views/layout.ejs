@@ -1,39 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <script
-      src="https://code.jquery.com/jquery-3.6.0.min.js"
-      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-      crossorigin="anonymous"
-    ></script>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-      crossorigin="anonymous"
-    />
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-      crossorigin="anonymous"
-    ></script>
-    <link rel="stylesheet" href="/stylesheets/style.css" />
-  </head>
-  <body>
-    <%-include("./layouts/partials/header") %> <% if(typeof(flash)!="undefined")
-    {%>
-    <div class="alert alert-<%= flash.type %> center-block m-2">
-      <%= flash.message %>
-    </div>
-    <% }%>
-    <div class="container body"><%-body %></div>
 
-    <hr />
-    <h5>This is Footer</h5>
-    <%- defineContent("footer") %>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <% if (locals.metaDescription) { %>
+    <meta name="description" content="<%= metaDescription %>" />
+    <% } else { %>
+      <meta name="description"
+        content="Lumina — Your destination for high-performance gear and limited-time savings." />
+      <% } %>
+        <% if (locals.metaKeywords) { %>
+          <meta name="keywords" content="<%= metaKeywords %>" />
+          <% } %>
+            <title>Lumina E-Commerce</title>
+            <link rel="stylesheet" href="/stylesheets/style.css" />
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="/" class="navbar-brand">Lumina</a>
+    <ul class="navbar-nav">
+      <li><a href="/" class="<%= currentPath === '/' ? 'active' : '' %>">Home</a></li>
+      <li><a href="/shop" class="<%= currentPath === '/shop' ? 'active' : '' %>">Shop</a></li>
+      <li><a href="/deals" class="<%= currentPath === '/deals' ? 'active' : '' %>">Deals</a></li>
+    </ul>
+    <div class="navbar-actions">
+      <button class="btn-icon" title="Search">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </button>
+      <a href="/dashboard" class="btn-icon" title="Wishlist">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path
+            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+          </path>
+        </svg>
+      </a>
+      <a href="/cart" class="btn-icon" title="Cart" style="position:relative; text-decoration:none;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+        <span class="cart-badge">0</span>
+      </a>
+      <!-- Role Toggle -->
+      <% if (locals.role==='admin' ) { %>
+        <a href="/admin" class="btn btn-sm role-toggle-admin">Admin Panel</a>
+        <a href="/toggle-role" class="btn btn-outline btn-sm">Client Mode</a>
+        <% } else { %>
+          <a href="/login" class="btn btn-outline btn-sm">Log In</a>
+          <a href="/register" class="btn btn-primary btn-sm">Sign Up</a>
+          <a href="/toggle-role" class="btn btn-sm role-toggle-client" title="Admin Mode">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path
+                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+              </path>
+            </svg>
+          </a>
+          <% } %>
+    </div>
+  </nav>
+
+  <%- body %>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-brand">Lumina</div>
+            <p class="footer-tagline">Your destination for high-performance gear and limited-time savings. Elevate your
+              everyday with Lumina.</p>
+          </div>
+          <div>
+            <div class="footer-col-title">Shop</div>
+            <ul class="footer-links">
+              <li><a href="/deals">Today's Deals</a></li>
+              <li><a href="/shop?sort=bestseller">Best Sellers</a></li>
+              <li><a href="/new-arrivals">New Arrivals</a></li>
+              <li><a href="#">Gift Cards</a></li>
+            </ul>
+          </div>
+          <div>
+            <div class="footer-col-title">Support</div>
+            <ul class="footer-links">
+              <li><a href="#">Order Status</a></li>
+              <li><a href="#">Shipping Policy</a></li>
+              <li><a href="#">Returns</a></li>
+              <li><a href="#">FAQ</a></li>
+            </ul>
+          </div>
+          <div>
+            <div class="footer-col-title">Legal</div>
+            <ul class="footer-links">
+              <li><a href="#">Terms of Use</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Cookie Settings</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2024 Lumina E-Commerce. All rights reserved.</span>
+          <span>Quality gear for everyday use</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- SmartShop AI Floating Button -->
+    <button id="smartshop-toggle" class="smartshop-btn" title="SmartShop AI Assistant">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path
+          d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z">
+        </path>
+        <path d="M5 3v4"></path>
+        <path d="M19 17v4"></path>
+        <path d="M3 5h4"></path>
+        <path d="M17 19h4"></path>
+      </svg>
+      <span class="smartshop-text">SmartShop</span>
+    </button>
+
+    <!-- SmartShop Chat Window -->
+    <div id="smartshop-window" class="smartshop-window">
+      <div class="smartshop-header">
+        <div class="smartshop-header-info">
+          <div class="smartshop-header-avatar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 8V4H8"></path>
+              <rect width="16" height="12" x="4" y="8" rx="2"></rect>
+              <path d="M2 14h2"></path>
+              <path d="M20 14h2"></path>
+              <path d="M15 13v2"></path>
+              <path d="M9 13v2"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="smartshop-header-title">Lumina AI</div>
+            <div class="smartshop-header-status">Online • SmartShop</div>
+          </div>
+        </div>
+        <button id="smartshop-close" class="smartshop-header-close">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 6 6 18"></path>
+            <path d="m6 6 12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div id="smartshop-messages" class="smartshop-messages">
+        <div class="smartshop-msg msg-ai">
+          Hi! I'm Lumina AI 🛍️ I can help you discover products, add them to your cart, and give recommendations. Try: "Show me gaming keyboards" or "headphones under $80".
+        </div>
+      </div>
+
+      <div id="smartshop-loading" class="smartshop-loading hidden">
+        <div class="typing-indicator">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <form id="smartshop-input-form" class="smartshop-input-container">
+        <input type="text" id="smartshop-input" placeholder="Type your request..." autocomplete="off">
+        <button type="submit" id="smartshop-send">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </form>
+    </div>
+
+    <script src="/javascripts/smartshop.js?v=1.0.2"></script>
+    <script>
+      // Countdown timer (reusable)
+      function startCountdown(endTime) {
+        const timers = document.querySelectorAll('[data-timer]');
+        if (!timers.length) return;
+        setInterval(() => {
+          const now = new Date().getTime();
+          const dist = endTime - now;
+          if (dist < 0) return;
+          const h = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const m = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
+          const s = Math.floor((dist % (1000 * 60)) / 1000);
+          document.querySelectorAll('[data-timer="h"]').forEach(el => el.textContent = String(h).padStart(2, '0'));
+          document.querySelectorAll('[data-timer="m"]').forEach(el => el.textContent = String(m).padStart(2, '0'));
+          document.querySelectorAll('[data-timer="s"]').forEach(el => el.textContent = String(s).padStart(2, '0'));
+        }, 1000);
+      }
+      startCountdown(new Date().getTime() + 86400000);
+    </script>
+</body>
+
 </html>

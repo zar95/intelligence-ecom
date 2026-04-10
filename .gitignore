@@ -1,3 +1,8 @@
 /node_modules
-*.lock
+/.env
+.env
+/.agent
+/.claude
 package-lock.json
+*.log
+.DS_Store

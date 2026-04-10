@@ -1,27 +1,138 @@
-<div class="row">
-  <form action="" method="POST">
-    <div class="col-6 offset-3">
-      <div class="form-group">
-        <label for="name">Email</label>
-        <input
-          type="text"
-          class="form-control"
-          name="email"
-          value="admin@admin.com"
-        />
-      </div>
-      <div class="form-group">
-        <label for="name">Password</label>
-        <input
-          type="password"
-          class="form-control"
-          name="password"
-          value="admin"
-        />
-      </div>
-      <div class="form-group">
-        <button class="btn btn-info" type="submit">Login</button>
-      </div>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Log in to your Lumina account to access premium tech deals." />
+    <title>Log In — Lumina</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/auth.css" />
+</head>
+
+<body class="auth-page">
+
+    <div class="auth-split">
+
+        <!-- ── LEFT BRAND PANEL ── -->
+        <div class="auth-brand-panel">
+            <div class="auth-orb auth-orb-1"></div>
+            <div class="auth-orb auth-orb-2"></div>
+            <div class="auth-orb auth-orb-3"></div>
+
+            <div class="auth-brand-content">
+                <a href="/" class="auth-brand-logo">Lumina</a>
+                <p class="auth-brand-tagline">Your destination for<br />premium tech.</p>
+
+                <div class="auth-brand-features">
+                    <div class="auth-brand-feat"><span class="auth-feat-icon">⚡</span> Lightning-fast delivery</div>
+                    <div class="auth-brand-feat"><span class="auth-feat-icon">🔒</span> Secure checkout</div>
+                    <div class="auth-brand-feat"><span class="auth-feat-icon">🏷️</span> Exclusive member deals</div>
+                </div>
+            </div>
+
+            <div class="auth-brand-footer">
+                © 2024 Lumina E-Commerce. All rights reserved.
+            </div>
+        </div>
+
+        <!-- ── RIGHT FORM PANEL ── -->
+        <div class="auth-form-panel">
+            <div class="auth-form-card">
+
+                <!-- Tabs -->
+                <div class="auth-tabs">
+                    <a href="/login" class="auth-tab auth-tab-active">Log In</a>
+                    <a href="/register" class="auth-tab">Sign Up</a>
+                </div>
+
+                <h2 class="auth-form-title">Welcome back</h2>
+                <p class="auth-form-sub">Enter your credentials to continue.</p>
+
+                <% if (locals.error) { %>
+                    <div class="auth-alert auth-alert-error">
+                        <%= error %>
+                    </div>
+                    <% } %>
+
+                        <form action="/login" method="POST" class="auth-form" id="login-form">
+
+                            <div class="auth-field">
+                                <label class="auth-label" for="email">Email Address</label>
+                                <div class="auth-input-wrap">
+                                    <input id="email" type="email" name="email" class="auth-input"
+                                        placeholder="you@example.com" autocomplete="email" required />
+                                </div>
+                            </div>
+
+                            <div class="auth-field">
+                                <div class="auth-label-row">
+                                    <label class="auth-label" for="password">Password</label>
+                                    <a href="/forgot-password" class="auth-forgot">Forgot password?</a>
+                                </div>
+                                <div class="auth-input-wrap">
+                                    <input id="password" type="password" name="password" class="auth-input"
+                                        placeholder="••••••••" autocomplete="current-password" required />
+                                    <button type="button" class="auth-eye-btn" onclick="togglePwd('password', this)"
+                                        title="Show password">👁️</button>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="auth-submit-btn" id="login-submit">Log In</button>
+
+                        </form>
+
+                        <div class="auth-divider"><span>or continue with</span></div>
+
+                        <div class="auth-socials">
+                            <button class="auth-social-btn" id="google-login">
+                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                    <path
+                                        d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"
+                                        fill="#4285F4" />
+                                    <path
+                                        d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"
+                                        fill="#34A853" />
+                                    <path
+                                        d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"
+                                        fill="#FBBC05" />
+                                    <path
+                                        d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"
+                                        fill="#EA4335" />
+                                </svg>
+                                Continue with Google
+                            </button>
+                            <button class="auth-social-btn" id="apple-login">
+                                <svg width="17" height="18" viewBox="0 0 17 18" fill="none">
+                                    <path
+                                        d="M13.844 9.545c-.02-2.134 1.744-3.163 1.823-3.213-1-1.452-2.549-1.65-3.094-1.667-1.31-.134-2.574.776-3.24.776-.676 0-1.703-.762-2.804-.74-1.43.021-2.76.836-3.496 2.112-1.503 2.597-.383 6.437 1.068 8.543.722 1.032 1.572 2.187 2.69 2.147 1.085-.043 1.495-.693 2.806-.693 1.302 0 1.677.693 2.812.669 1.165-.02 1.9-1.044 2.611-2.083.831-1.19 1.169-2.358 1.183-2.418-.027-.01-2.256-.864-2.359-3.433z"
+                                        fill="currentColor" />
+                                    <path
+                                        d="M11.77 3.28C12.346 2.58 12.74 1.61 12.632.63c-.843.035-1.872.562-2.474 1.247-.539.612-1.017 1.6-.891 2.542.943.072 1.903-.473 2.503-1.139z"
+                                        fill="currentColor" />
+                                </svg>
+                                Continue with Apple
+                            </button>
+                        </div>
+
+                        <p class="auth-switch-text">Don't have an account? <a href="/register"
+                                class="auth-switch-link">Sign up free</a></p>
+
+            </div>
+        </div>
+
     </div>
-  </form>
-</div>
+
+    <script>
+        function togglePwd(id, btn) {
+            const input = document.getElementById(id);
+            input.type = input.type === 'password' ? 'text' : 'password';
+            btn.textContent = input.type === 'password' ? '👁️' : '🙈';
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+</head>
+
+<body class="admin-body">
+
+    <!-- ADMIN SHELL -->
+    <div class="admin-shell">
+
+        <!-- SIDEBAR -->
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-header">
+                <a href="/" class="admin-logo">Lumina</a>
+                <span class="admin-logo-badge">Admin</span>
+            </div>
+
+            <nav class="admin-nav">
+                <div class="admin-nav-label">Main</div>
+                <a href="/admin"
+                    class="admin-nav-item <%= locals.title && locals.title.includes('Dashboard') ? 'active' : '' %>">
+                    <span class="admin-nav-icon">📊</span> Dashboard
+                </a>
+                <a href="/admin/products"
+                    class="admin-nav-item <%= locals.title && locals.title.includes('Product') ? 'active' : '' %>">
+                    <span class="admin-nav-icon">📦</span> Products
+                </a>
+
+                <div class="admin-nav-label" style="margin-top:1.5rem;">Store</div>
+                <a href="/shop" class="admin-nav-item" target="_blank">
+                    <span class="admin-nav-icon">🛍️</span> View Shop
+                </a>
+                <a href="/deals" class="admin-nav-item" target="_blank">
+                    <span class="admin-nav-icon">🏷️</span> View Deals
+                </a>
+
+                <div class="admin-nav-divider"></div>
+                <a href="/toggle-role" class="admin-nav-item admin-nav-exit">
+                    <span class="admin-nav-icon">👤</span> Switch to Client
+                </a>
+            </nav>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <div class="admin-main">
+            <!-- TOP BAR -->
+            <header class="admin-topbar">
+                <div class="admin-topbar-left">
+                    <h1 class="admin-page-title">
+                        <%= title %>
+                    </h1>
+                </div>
+                <div class="admin-topbar-right">
+                    <span class="admin-role-pill">🔧 Admin Mode</span>
+                    <a href="/" class="btn btn-outline btn-sm">← Back to Store</a>
+                </div>
+            </header>
+
+            <!-- PAGE CONTENT -->
+            <main class="admin-content">
+                <%- body %>
+            </main>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

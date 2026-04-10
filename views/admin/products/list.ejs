@@ -1,0 +1,80 @@
+<% if (locals.flash) { %>
+    <div class="admin-flash admin-flash-success">✅ <%= flash %>
+    </div>
+    <% } %>
+
+        <div class="admin-section-header" style="margin-bottom:1.5rem">
+            <div>
+                <h2 class="admin-section-title">All Products</h2>
+                <p style="color:var(--text-secondary);font-size:0.875rem;margin-top:0.25rem">
+                    <%= products.length %> products in store
+                </p>
+            </div>
+            <a href="/admin/products/create" class="btn btn-primary">+ Add Product</a>
+        </div>
+
+        <div class="table-wrap">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="width:50px">Icon</th>
+                        <th>Name</th>
+                        <th>Brand</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Was</th>
+                        <th>Badge</th>
+                        <th style="width:160px">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (products.length===0) { %>
+                        <tr>
+                            <td colspan="8" style="text-align:center;padding:3rem;color:var(--text-muted)">
+                                No products yet. <a href="/admin/products/create" style="color:var(--primary)">Add your
+                                    first one →</a>
+                            </td>
+                        </tr>
+                        <% } %>
+                            <% products.forEach(function(p) { %>
+                                <tr>
+                                    <td style="font-size:1.5rem;text-align:center">
+                                        <%= p.icon %>
+                                    </td>
+                                    <td>
+                                        <div style="font-weight:600;color:var(--text-primary)">
+                                            <%= p.name %>
+                                        </div>
+                                        <div style="font-size:0.75rem;color:var(--text-muted)">ID: <%= p._id %>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <%= p.brand %>
+                                    </td>
+                                    <td>
+                                        <%= p.category %>
+                                    </td>
+                                    <td style="color:var(--primary);font-weight:700">$<%= p.price %>
+                                    </td>
+                                    <td style="color:var(--text-muted);text-decoration:line-through">$<%= p.was %>
+                                    </td>
+                                    <td><span class="badge <%= p.badgeClass %>">
+                                            <%= p.badge %>
+                                        </span></td>
+                                    <td>
+                                        <div style="display:flex;gap:0.5rem">
+                                            <a href="/admin/products/<%= p._id %>/edit" class="btn btn-outline btn-sm">✏️
+                                                Edit</a>
+                                            <form action="/admin/products/<%= p._id %>/delete" method="POST"
+                                                onsubmit="return confirm('Delete <%= p.name %>?')">
+                                                <button type="submit" class="btn btn-sm"
+                                                    style="background:rgba(255,71,87,0.15);color:var(--danger);border:1px solid rgba(255,71,87,0.3)">🗑️
+                                                    Del</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                </tbody>
+            </table>
+        </div>

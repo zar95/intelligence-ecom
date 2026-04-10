@@ -1,24 +1,106 @@
-<a href="/" class="btn btn-info">Continue Shopping</a>
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>Product Name</th>
-            <th>Product Price</th>
-        </tr>
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="container">
+    <ul class="breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li><a href="/shop">Shop</a></li>
+      <li>Your Cart</li>
+    </ul>
+    <h1 class="page-header-title">Your Cart</h1>
+  </div>
+</div>
 
-    </thead>
-    <tbody>
-        <% for(var i=0;i<products.length;i++) {let product = products[i];%>
-            <tr>
-                <td><%=product.name  %> </td>
-                <td><%=product.price  %> </td>
-            </tr>
-            <% } %> 
-            <tfoot>
-                <tr>
-                    <td>Total:</td>
-                    <td><%=total  %> </td>
-                </tr>
-            </tfoot>
-    </tbody>
-</table>
+<div class="container" style="padding-bottom:4rem;">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Cart Items</h2>
+    </div>
+    <a href="/shop" class="btn btn-outline">Continue Shopping →</a>
+  </div>
+
+  <% if (!items || items.length===0) { %>
+    <div style="padding:2rem;text-align:center;color:var(--text-secondary);">Your cart is empty.</div>
+    <% } else { %>
+      <div class="cart-grid">
+        <div class="cart-items">
+          <% let grandTotal=0; items.forEach(function(it) { const p=it.product || {}; const subtotal=(it.price ||
+            p.price || 0) * it.quantity; grandTotal +=subtotal; %>
+            <div class="cart-item" data-product-id="<%= p._id %>">
+              <div class="cart-item-thumb" style="font-size:2.5rem;">
+                <%= p.icon || '📦' %>
+              </div>
+              <div class="cart-item-body">
+                <div class="cart-item-title"><a href="/product/<%= p.slug %>">
+                    <%= p.name %>
+                  </a></div>
+                <div class="cart-item-meta">
+                  <%= p.brand %>
+                </div>
+              </div>
+              <div class="cart-item-qty">
+                Qty: <input type="number" class="cart-qty-input" value="<%= it.quantity %>" min="1"
+                  style="width:60px;padding:0.25rem;border-radius:4px;border:1px solid var(--dark-border);" />
+              </div>
+              <div class="cart-item-price">
+                $<%= (it.price || p.price).toFixed(2) %>
+              </div>
+              <div class="cart-item-subtotal">
+                $<%= subtotal.toFixed(2) %>
+              </div>
+              <div class="cart-item-actions">
+                <button class="btn btn-outline btn-sm btn-remove" data-product-id="<%= p._id %>">Remove</button>
+              </div>
+            </div>
+            <% }); %>
+        </div>
+
+        <aside class="cart-summary">
+          <div style="font-size:0.95rem;color:var(--text-secondary);margin-bottom:0.5rem;">Order Summary</div>
+          <div style="display:flex;justify-content:space-between;font-weight:700;margin-bottom:0.75rem;">
+            <span>Subtotal</span>
+            <span id="cart-total">$<%= (cart && cart.totalPrice ? cart.totalPrice.toFixed(2) : grandTotal.toFixed(2)) %>
+                </span>
+          </div>
+          <div style="display:flex;justify-content:space-between;color:var(--text-secondary);margin-bottom:1rem;">
+            <span>Shipping</span><span>Calculated at checkout</span></div>
+          <button id="btn-checkout" class="btn btn-primary btn-block">Proceed to Checkout</button>
+          <button id="btn-clear-cart" class="btn btn-outline btn-block" style="margin-top:0.75rem;">Clear Cart</button>
+        </aside>
+      </div>
+      <% } %>
+</div>
+
+<!-- Payment Mock Modal -->
+<div id="payment-modal" class="payment-modal-overlay">
+  <div class="payment-modal">
+    <button type="button" id="close-payment-modal" class="payment-modal-close">&times;</button>
+    <h3 class="payment-modal-title">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+      Secure Checkout
+    </h3>
+    <form id="mock-payment-form">
+      <div class="payment-form-group">
+        <label>Name on Card</label>
+        <input type="text" id="cc-name" value="Guest Customer" required>
+      </div>
+      <div class="payment-form-group">
+        <label>Card Number</label>
+        <input type="text" id="cc-number" placeholder="0000 0000 0000 0000" maxlength="19" required>
+      </div>
+      <div class="payment-form-row">
+        <div class="payment-form-group">
+          <label>Expiry Date</label>
+          <input type="text" placeholder="MM/YY" maxlength="5" required>
+        </div>
+        <div class="payment-form-group">
+          <label>CVC</label>
+          <input type="password" placeholder="123" maxlength="4" required>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" style="margin-top:10px;">Pay Now</button>
+      <div style="font-size:0.75rem;color:var(--text-secondary);text-align:center;margin-top:1rem;">
+        This is a testing environment. Please use dummy card info.
+      </div>
+    </form>
+  </div>
+</div>

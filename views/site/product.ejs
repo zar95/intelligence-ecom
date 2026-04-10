@@ -1,0 +1,237 @@
+<!-- PAGE HEADER -->
+<div class="page-header">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><a href="/shop">Shop</a></li>
+            <li>
+                <%= product ? product.name : "Ultra-Bass Wireless Headphones" %>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="container" style="padding-bottom:5rem;">
+    <% if (product) { %>
+        <div class="product-detail-grid">
+
+            <!-- PRODUCT GALLERY -->
+            <div class="product-gallery">
+                <div class="product-main-image"
+                    style="background:var(--dark-card); overflow:hidden; display:flex; align-items:center; justify-content:center;">
+                    <% if (product.images && product.images.length> 0) { %>
+                        <img src="<%= product.images[0] %>" alt="<%= product.name %>"
+                            style="width:100%; height:100%; object-fit:cover;" />
+                        <% } else { %>
+                            NO IMAGE
+
+                            <% } %>
+                </div>
+                <div class="product-thumbnails">
+                    <% if (product.images && product.images.length> 0) { %>
+                        <% product.images.forEach((img, idx)=> { %>
+                            <div class="product-thumb <%= idx === 0 ? 'active' : '' %>" style="overflow:hidden;">
+                                <img src="<%= img %>" alt="Thumbnail"
+                                    style="width:100%; height:100%; object-fit:cover;" />
+                            </div>
+                            <% }) %>
+                                <% } else { %>
+                                    <div class="product-thumb active"
+                                        style="font-size:1.5rem; display:flex; align-items:center; justify-content:center;">
+                                        <%= product.icon || '📦' %>
+                                    </div>
+                                    <% } %>
+                </div>
+            </div>
+
+            <!-- PRODUCT INFO -->
+            <div class="product-info">
+                <div class="product-info-brand">
+                    <%= product.brand %>
+                </div>
+                <h1 class="product-info-title">
+                    <%= product.name %>
+                </h1>
+
+                <div class="product-rating">
+                    <span class="stars" style="color:var(--primary);letter-spacing:2px;">5 Stars</span>
+                    <span class="rating-text">4.9 (2,847 reviews)</span>
+                    <span class="badge badge-primary">In Stock</span>
+                </div>
+
+                <div class="product-price-row">
+                    <span class="product-price-current">$<%= product.price %></span>
+                    <% if (product.compareAtPrice) { %>
+                        <span class="product-price-was">$<%= product.compareAtPrice %></span>
+                        <% } else if (product.was) { %>
+                            <span class="product-price-was">$<%= product.was %></span>
+                            <% } %>
+                                <% if (product.discount && product.discount !=='0%' ) { %>
+                                    <span class="product-discount-pct">-<%= product.discount %></span>
+                                    <% } %>
+                </div>
+
+                <div
+                    style="background:rgba(19,236,109,0.07);border:1px solid rgba(19,236,109,0.2);border-radius:var(--radius-sm);padding:0.875rem 1rem;margin-bottom:1.25rem;">
+                    <div style="font-size:0.85rem;color:var(--primary);font-weight:600;">Flash Sale — Ends in
+                        <strong>18:42:07</strong>
+                    </div>
+                    <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:0.25rem;">Save $70 — lowest
+                        price in
+                        30 days. Only 14 left!</div>
+                </div>
+
+                <div class="product-divider"></div>
+
+                <div class="product-option-label">Color</div>
+                <div class="option-btns">
+                    <button class="option-btn active">Midnight Black</button>
+                    <button class="option-btn">Glacier White</button>
+                    <button class="option-btn">Sage Green</button>
+                    <button class="option-btn">Space Blue</button>
+                </div>
+
+                <div class="product-option-label">Connectivity</div>
+                <div class="option-btns">
+                    <button class="option-btn active">Bluetooth 5.3</button>
+                    <button class="option-btn">Wired 3.5mm</button>
+                    <button class="option-btn">USB-C</button>
+                </div>
+
+                <div class="product-divider"></div>
+
+                <div class="product-option-label">Quantity</div>
+                <div class="qty-row">
+                    <button class="qty-btn"
+                        onclick="if(parseInt(document.getElementById('qty').value)>1) document.getElementById('qty').value=parseInt(document.getElementById('qty').value)-1;">−</button>
+                    <input type="number" id="qty" class="qty-input" value="1" min="1" max="14" />
+                    <button class="qty-btn"
+                        onclick="if(parseInt(document.getElementById('qty').value)<14) document.getElementById('qty').value=parseInt(document.getElementById('qty').value)+1;">+</button>
+                    <span style="font-size:0.8rem;color:var(--text-secondary);margin-left:0.5rem;">14 in stock</span>
+                </div>
+
+                <div class="add-to-cart-row">
+                    <button class="btn btn-primary btn-cart" data-product-id="<%= product._id %>">Add to Cart</button>
+                    <button class="btn-icon btn-wishlist" data-product-id="<%= product._id %>"
+                        style="width:48px;height:48px;border-radius:var(--radius-sm);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                            </path>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="product-divider"></div>
+
+                <!-- KEY FEATURES -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1.5rem;">
+                    <div
+                        style="display:flex;align-items:center;gap:0.6rem;font-size:0.85rem;color:var(--text-secondary);">
+                        <span style="color:var(--primary);">✓</span> Active Noise Cancellation
+                    </div>
+                    <div
+                        style="display:flex;align-items:center;gap:0.6rem;font-size:0.85rem;color:var(--text-secondary);">
+                        <span style="color:var(--primary);">✓</span> 40-Hour Battery Life
+                    </div>
+                    <div
+                        style="display:flex;align-items:center;gap:0.6rem;font-size:0.85rem;color:var(--text-secondary);">
+                        <span style="color:var(--primary);">✓</span> Hi-Res Audio Certified
+                    </div>
+                    <div
+                        style="display:flex;align-items:center;gap:0.6rem;font-size:0.85rem;color:var(--text-secondary);">
+                        <span style="color:var(--primary);">✓</span> Multi-Device Connect
+                    </div>
+                    <div
+                        style="display:flex;align-items:center;gap:0.6rem;font-size:0.85rem;color:var(--text-secondary);">
+                        <span style="color:var(--primary);">✓</span> Foldable Design
+                    </div>
+                    <div
+                        style="display:flex;align-items:center;gap:0.6rem;font-size:0.85rem;color:var(--text-secondary);">
+                        <span style="color:var(--primary);">✓</span> Quick Charge (10min=4hrs)
+                    </div>
+                </div>
+
+                <!-- TRUST BADGES -->
+                <div style="display:flex;gap:1.25rem;flex-wrap:wrap;">
+                    <div
+                        style="display:flex;align-items:center;gap:0.4rem;font-size:0.8rem;color:var(--text-secondary);">
+                        <span>Free shipping over $99</span>
+                    </div>
+                    <div
+                        style="display:flex;align-items:center;gap:0.4rem;font-size:0.8rem;color:var(--text-secondary);">
+                        <span>30-day free returns</span>
+                    </div>
+                    <div
+                        style="display:flex;align-items:center;gap:0.4rem;font-size:0.8rem;color:var(--text-secondary);">
+                        <span>2-year warranty</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRODUCT DETAILS TABS -->
+        <div style="margin-top:4rem;">
+            <div style="display:flex;gap:0;border-bottom:1px solid var(--dark-border);margin-bottom:2rem;">
+                <button class="btn btn-outline btn-sm"
+                    style="border-radius:0;border-bottom:2px solid var(--primary);color:var(--primary);border-left:none;border-right:none;border-top:none;padding:0.75rem 1.5rem;">Description</button>
+                <button class="btn btn-outline btn-sm"
+                    style="border-radius:0;border:none;color:var(--text-secondary);padding:0.75rem 1.5rem;">Specifications</button>
+                <button class="btn btn-outline btn-sm"
+                    style="border-radius:0;border:none;color:var(--text-secondary);padding:0.75rem 1.5rem;">Reviews
+                    (2,847)</button>
+            </div>
+            <div style="max-width:720px;color:var(--text-secondary);font-size:0.95rem;line-height:1.8;">
+                <% if (product.description) { %>
+                    <p>
+                        <%= product.description %>
+                    </p>
+                    <% } else { %>
+                        <p>No description available.</p>
+                        <% } %>
+            </div>
+        </div>
+        <% } else { %>
+            <h2>Product Not Found</h2>
+            <% } %>
+
+                <!-- RELATED PRODUCTS -->
+                <div style="margin-top:4rem;">
+                    <div class="section-header">
+                        <div>
+                            <h2 class="section-title">You May Also Like</h2>
+                        </div>
+                        <a href="/shop" class="btn btn-outline">View All →</a>
+                    </div>
+                    <div class="product-grid">
+                        <% related.forEach(function(p) { %>
+                            <a href="/product" class="card" style="display:block;">
+                                <div class="card-img"
+                                    style="display:flex;align-items:center;justify-content:center;font-size:3.5rem;background:linear-gradient(135deg,#1a2234,#2a3550);">
+                                    <%= p.icon %>
+                                </div>
+                                <div class="card-body">
+                                    <span class="badge <%= p.badgeClass %> mb-1">
+                                        <%= p.badge %>
+                                    </span>
+                                    <div class="card-title">
+                                        <%= p.name %>
+                                    </div>
+                                    <div class="card-subtitle">
+                                        <%= p.brand %>
+                                    </div>
+                                    <div>
+                                        <span class="card-price">
+                                            <%= p.price %>
+                                        </span>
+                                        <span class="card-price-old">
+                                            <%= p.was %>
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                            <% }); %>
+                    </div>
+                </div>
+</div>

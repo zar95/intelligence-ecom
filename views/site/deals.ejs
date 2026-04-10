@@ -1,0 +1,116 @@
+<!-- PAGE HEADER -->
+<div class="page-header">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li>Special Deals</li>
+        </ul>
+        <h1 class="page-header-title">Special Deals</h1>
+        <p class="page-header-sub">Hand-picked offers updated daily — limited stock, maximum savings</p>
+    </div>
+</div>
+
+<div class="container">
+    <!-- FLASH SALE TIMER -->
+    <div class="timer-bar" style="margin-bottom:2.5rem;">
+        <div class="timer-label">Flash Sale ends in:</div>
+        <div class="timer-blocks">
+            <div class="timer-block">
+                <div class="timer-number" data-timer="h">18</div>
+                <div class="timer-unit">HRS</div>
+            </div>
+            <span class="timer-sep">:</span>
+            <div class="timer-block">
+                <div class="timer-number" data-timer="m">42</div>
+                <div class="timer-unit">MIN</div>
+            </div>
+            <span class="timer-sep">:</span>
+            <div class="timer-block">
+                <div class="timer-number" data-timer="s">07</div>
+                <div class="timer-unit">SEC</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DEAL CATEGORIES TABS -->
+    <div style="display:flex;gap:0.75rem;margin-bottom:2rem;flex-wrap:wrap;">
+        <a href="/deals" class="btn <%= !currentCategory ? 'btn-primary' : 'btn-outline' %> btn-sm">All Deals</a>
+        <% if (locals.categories) { %>
+            <% categories.forEach(function(cat) { %>
+                <a href="/deals?category=<%= cat.slug %>"
+                    class="btn <%= currentCategory === cat.slug ? 'btn-primary' : 'btn-outline' %> btn-sm">
+                    <%= cat.name %>
+                </a>
+                <% }); %>
+                    <% } %>
+    </div>
+
+    <!-- DEAL CARDS GRID -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;margin-bottom:4rem;">
+        <% if (locals.deals && deals.length> 0) { %>
+            <% deals.forEach(function(deal, index) { const progress=Math.floor(Math.random() * 60) + 30; %>
+                <div class="deal-card">
+                    <div class="card-img" style="background: #1a2234; overflow: hidden; height: 200px;">
+                        <% if (deal.mainImageUrl) { %>
+                            <img src="<%= deal.mainImageUrl %>" alt="<%= deal.name %>"
+                                style="width:100%; height:100%; object-fit:cover;" />
+                            <% } else { %>
+                                NO IMAGE
+
+                                <% } %>
+                    </div>
+                    <div class="deal-card-body">
+                        <div
+                            style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
+                            <span class="badge <%= deal.badgeClass || 'badge-danger' %>">
+                                <%= deal.badge || 'DEAL' %>
+                            </span>
+                            <span style="font-size:0.75rem;color:var(--text-muted);">Limited time</span>
+                        </div>
+                        <div
+                            style="font-size:0.75rem;color:var(--primary);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:0.3rem;">
+                            <%= deal.brand %>
+                        </div>
+                        <div style="font-size:1rem;font-weight:800;margin-bottom:0.3rem;">
+                            <%= deal.name %>
+                        </div>
+                        <div style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:0.75rem;">
+                            <%= deal.description ? (deal.description.substring(0, 50) + '...' ) : '' %>
+                        </div>
+                        <div class="deal-progress-bar">
+                            <div class="deal-progress-fill" style="width: '<%= progress %>%'"></div>
+                        </div>
+                        <div class="deal-stock-text">
+                            <%= progress %>% sold
+                        </div>
+                    </div>
+                    <div class="deal-card-footer">
+                        <div>
+                            <span style="font-size:1.3rem;font-weight:800;color:var(--primary);">
+                                <%= deal.price %>
+                            </span>
+                            <span
+                                style="font-size:0.85rem;color:var(--text-muted);text-decoration:line-through;margin-left:0.5rem;">
+                                <%= deal.was %>
+                            </span>
+                        </div>
+                        <a href="/product/<%= deal.slug %>" class="btn btn-primary btn-sm">Add to Cart</a>
+                    </div>
+                </div>
+                <% }); %>
+                    <% } else { %>
+                        <p style="grid-column: 1 / -1; text-align: center; color: var(--text-muted);">No deals available
+                            right now. Check back later!</p>
+                        <% } %>
+    </div>
+
+    <!-- NEWSLETTER CTA -->
+    <div class="newsletter-section" style="margin-bottom:4rem;">
+        <h2 class="newsletter-title">Never Miss a Deal Again</h2>
+        <p class="newsletter-subtitle">Subscribe and get deal alerts 2 hours before the public drop.</p>
+        <form class="newsletter-form" onsubmit="return false;">
+            <input class="newsletter-input" type="email" placeholder="your@email.com" />
+            <button class="btn btn-primary">Get Early Access</button>
+        </form>
+    </div>
+</div>

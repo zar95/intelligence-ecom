@@ -1,0 +1,81 @@
+<!-- STATS ROW -->
+<div class="stats-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">
+    <div class="stat-card">
+        <div class="stat-icon">📦</div>
+        <div class="stat-value">
+            <%= totalProducts %>
+        </div>
+        <div class="stat-label">Total Products</div>
+        <div class="stat-change up">↑ Live in store</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">💰</div>
+        <div class="stat-value">$<%= totalValue.toLocaleString() %>
+        </div>
+        <div class="stat-label">Catalog Value</div>
+        <div class="stat-change up">↑ Sum of prices</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">🏷️</div>
+        <div class="stat-value">12</div>
+        <div class="stat-label">Categories</div>
+        <div class="stat-change up">↑ Across all products</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">⚡</div>
+        <div class="stat-value">In-Memory</div>
+        <div class="stat-label">Data Store</div>
+        <div class="stat-change" style="color:var(--warning)">→ No DB yet</div>
+    </div>
+</div>
+
+<!-- QUICK ACTIONS -->
+<div class="admin-quick-actions">
+    <a href="/admin/products/create" class="btn btn-primary">+ Add New Product</a>
+    <a href="/admin/products" class="btn btn-outline">View All Products</a>
+</div>
+
+<!-- RECENT PRODUCTS -->
+<div class="admin-section-card" style="margin-top:2rem;">
+    <div class="admin-section-header">
+        <h2 class="admin-section-title">Recent Products</h2>
+        <a href="/admin/products" class="btn btn-outline btn-sm">View All →</a>
+    </div>
+    <div class="table-wrap">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Icon</th>
+                    <th>Name</th>
+                    <th>Brand</th>
+                    <th>Price</th>
+                    <th>Badge</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% recentProducts.forEach(function(p) { %>
+                    <tr>
+                        <td style="font-size:1.4rem">
+                            <%= p.icon %>
+                        </td>
+                        <td style="color:var(--text-primary);font-weight:600">
+                            <%= p.name %>
+                        </td>
+                        <td>
+                            <%= p.brand %>
+                        </td>
+                        <td style="color:var(--primary);font-weight:700">$<%= p.price %>
+                        </td>
+                        <td><span class="badge <%= p.badgeClass %>">
+                                <%= p.badge %>
+                            </span></td>
+                        <td>
+                            <a href="/admin/products/<%= p._id %>/edit" class="btn btn-outline btn-sm">Edit</a>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>

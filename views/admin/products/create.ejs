@@ -1,0 +1,104 @@
+<% if (locals.errors) { %>
+    <div class="admin-flash admin-flash-error">⚠️ <%= errors %>
+    </div>
+    <% } %>
+
+        <div class="admin-form-card">
+            <form action="/admin/products/create" method="POST" class="admin-form">
+
+                <div class="admin-form-row">
+                    <div class="admin-form-group">
+                        <label class="admin-label">Product Name *</label>
+                        <input type="text" name="name" class="admin-input" placeholder="e.g. Ultra-Bass Headphones"
+                            value="<%= locals.product && product.name ? product.name : '' %>" required />
+                    </div>
+                    <div class="admin-form-group">
+                        <label class="admin-label">Brand *</label>
+                        <input type="text" name="brand" class="admin-input" placeholder="e.g. Lumina Audio"
+                            value="<%= locals.product && product.brand ? product.brand : '' %>" required />
+                    </div>
+                </div>
+
+                <div class="admin-form-row">
+                    <div class="admin-form-group">
+                        <label class="admin-label">Price ($) *</label>
+                        <input type="number" name="price" class="admin-input" placeholder="129" step="0.01"
+                            value="<%= locals.product && product.price ? product.price : '' %>" required />
+                    </div>
+                    <div class="admin-form-group">
+                        <label class="admin-label">Was Price ($)</label>
+                        <input type="number" name="was" class="admin-input" placeholder="199" step="0.01"
+                            value="<%= locals.product && product.was ? product.was : '' %>" />
+                    </div>
+                    <div class="admin-form-group">
+                        <label class="admin-label">Discount</label>
+                        <input type="text" name="discount" class="admin-input" placeholder="35%"
+                            value="<%= locals.product && product.discount ? product.discount : '' %>" />
+                    </div>
+                </div>
+
+                <div class="admin-form-row">
+                    <div class="admin-form-group">
+                        <label class="admin-label">Icon (emoji)</label>
+                        <input type="text" name="icon" class="admin-input" placeholder="🎧"
+                            value="<%= locals.product && product.icon ? product.icon : '' %>" />
+                    </div>
+                    <div class="admin-form-group">
+                        <label class="admin-label">Category</label>
+                        <select name="category" class="admin-input admin-select">
+                            <option value="">Select a Category</option>
+                            <% if (locals.categories && categories.length > 0) { %>
+                                <% categories.forEach(function(cat) { %>
+                                    <option value="<%= cat._id %>" <%= locals.product && product.category == cat._id ? 'selected' : '' %>><%= cat.name %></option>
+                                <% }) %>
+                            <% } %>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="admin-form-row">
+                    <div class="admin-form-group">
+                        <label class="admin-label">Badge Text</label>
+                        <input type="text" name="badge" class="admin-input" placeholder="NEW"
+                            value="<%= locals.product && product.badge ? product.badge : '' %>" />
+                    </div>
+                    <div class="admin-form-group">
+                        <label class="admin-label">Badge Style</label>
+                        <select name="badgeClass" class="admin-input admin-select">
+                            <% [['badge-primary','Green'],['badge-danger','Red'],['badge-accent','Purple'],['badge-warning','Orange']].forEach(function(b)
+                                { %>
+                                <option value="<%= b[0] %>" <%=locals.product && product.badgeClass===b[0] ? 'selected'
+                                    : '' %>><%= b[1] %>
+                                </option>
+                                <% }) %>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="admin-form-row">
+                    <div class="admin-form-group" style="flex: 1;">
+                        <label class="admin-label">Description</label>
+                        <textarea name="description" class="admin-input" rows="4" placeholder="Product description..."><%= locals.product && product.description ? product.description : '' %></textarea>
+                    </div>
+                </div>
+
+                <div class="admin-form-row">
+                    <div class="admin-form-group">
+                        <label class="admin-label">Meta Keywords (SEO)</label>
+                        <input type="text" name="metaKeywords" class="admin-input" placeholder="e.g. headphones, wireless, audio (comma separated)"
+                            value="<%= locals.product && product.metaKeywords ? product.metaKeywords : '' %>" />
+                    </div>
+                    <div class="admin-form-group">
+                        <label class="admin-label">Meta Description (SEO)</label>
+                        <input type="text" name="metaDescription" class="admin-input" placeholder="Max 160 chars summary for search engines" maxlength="160"
+                            value="<%= locals.product && product.metaDescription ? product.metaDescription : '' %>" />
+                    </div>
+                </div>
+
+                <div class="admin-form-actions">
+                    <a href="/admin/products" class="btn btn-outline">Cancel</a>
+                    <button type="submit" class="btn btn-primary">✅ Create Product</button>
+                </div>
+
+            </form>
+        </div>

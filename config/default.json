@@ -1,0 +1,4 @@
+{
+  "db": "mongodb://localhost/lumina",
+  "jwtPrivateKey": "lumina_unsecure_key_for_dev"
+}

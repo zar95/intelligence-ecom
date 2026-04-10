@@ -1,0 +1,160 @@
+<!-- PAGE HEADER -->
+<div class="page-header">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li>My Dashboard</li>
+        </ul>
+        <h1 class="page-header-title">Client Dashboard</h1>
+        <p class="page-header-sub">Welcome back, <strong style="color:var(--primary);">Alex Johnson</strong></p>
+    </div>
+</div>
+
+<div class="container" style="padding-bottom:4rem;">
+
+    <!-- STATS -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">📦</div>
+            <div class="stat-value">24</div>
+            <div class="stat-label">Total Orders</div>
+            <div class="stat-change up">↑ 3 this month</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">💰</div>
+            <div class="stat-value">$2,847</div>
+            <div class="stat-label">Total Spent</div>
+            <div class="stat-change up">↑ $349 this month</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">♡</div>
+            <div class="stat-value">12</div>
+            <div class="stat-label">Wishlist Items</div>
+            <div class="stat-change up">↑ 4 new</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">⭐</div>
+            <div class="stat-value">8</div>
+            <div class="stat-label">Reviews Written</div>
+            <div class="stat-change up">↑ 2 pending</div>
+        </div>
+    </div>
+
+    <!-- RECENT ORDERS TABLE -->
+    <div style="margin-bottom:2rem;">
+        <div class="section-header" style="margin-bottom:1rem;">
+            <h2 class="section-title" style="font-size:1.2rem;">Recent Orders</h2>
+            <a href="#" class="btn btn-outline btn-sm">View All Orders →</a>
+        </div>
+        <div class="table-wrap">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Product</th>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% orders.forEach(function(o){ %>
+                        <tr>
+                            <td style="color:var(--text-primary);font-weight:600;">
+                                <%= o.id %>
+                            </td>
+                            <td>
+                                <%= o.product %>
+                            </td>
+                            <td>
+                                <%= o.date %>
+                            </td>
+                            <td style="color:var(--text-primary);font-weight:700;">
+                                <%= o.amount %>
+                            </td>
+                            <td><span style="color:<%= o.color %>;font-weight:600;font-size:0.8rem;">
+                                    <%= o.status %>
+                                </span></td>
+                            <td><a href="#" style="color:var(--primary);font-size:0.8rem;font-weight:600;">Track</a>
+                            </td>
+                        </tr>
+                        <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ACCOUNT INFO + WISHLIST -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem;">
+
+        <!-- ACCOUNT INFO -->
+        <div class="card" style="border-radius:var(--radius-md);">
+            <div class="card-body" style="padding:1.5rem;">
+                <h3 style="font-size:1rem;font-weight:800;margin-bottom:1.25rem;">Account Details</h3>
+                <div style="display:flex;flex-direction:column;gap:0.875rem;">
+                    <div style="display:flex;justify-content:space-between;font-size:0.875rem;">
+                        <span style="color:var(--text-secondary);">Full Name</span>
+                        <span style="color:var(--text-primary);font-weight:600;">Alex Johnson</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;font-size:0.875rem;">
+                        <span style="color:var(--text-secondary);">Email</span>
+                        <span style="color:var(--text-primary);font-weight:600;">alex@lumina.com</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;font-size:0.875rem;">
+                        <span style="color:var(--text-secondary);">Phone</span>
+                        <span style="color:var(--text-primary);font-weight:600;">+1 (555) 234-5678</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;font-size:0.875rem;">
+                        <span style="color:var(--text-secondary);">Member Since</span>
+                        <span style="color:var(--text-primary);font-weight:600;">Jan 2023</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;font-size:0.875rem;">
+                        <span style="color:var(--text-secondary);">VIP Status</span>
+                        <span class="badge badge-primary">Gold Member</span>
+                    </div>
+                </div>
+                <div style="margin-top:1.25rem;">
+                    <a href="#" class="btn btn-outline btn-sm">Edit Profile</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- WISHLIST SNAPSHOT -->
+        <div class="card" style="border-radius:var(--radius-md);">
+            <div class="card-body" style="padding:1.5rem;">
+                <h3 style="font-size:1rem;font-weight:800;margin-bottom:1.25rem;">Wishlist (12)</h3>
+                <div style="display:flex;flex-direction:column;gap:0.75rem;">
+                    <% wishlist.forEach(function(w){ %>
+                        <div
+                            style="display:flex;align-items:center;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid var(--dark-border);">
+                            <div style="display:flex;align-items:center;gap:0.75rem;">
+                                <div
+                                    style="width:36px;height:36px;background:var(--dark);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">
+                                    <%= w.icon %>
+                                </div>
+                                <span style="font-size:0.85rem;color:var(--text-primary);font-weight:600;">
+                                    <%= w.name %>
+                                </span>
+                            </div>
+                            <span style="font-size:0.85rem;color:var(--primary);font-weight:700;">
+                                <%= w.price %>
+                            </span>
+                        </div>
+                        <% }); %>
+                </div>
+                <div style="margin-top:1rem;">
+                    <a href="/shop" class="btn btn-outline btn-sm">View Full Wishlist →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QUICK ACTIONS -->
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+        <a href="/shop" class="btn btn-primary">🛍️ Continue Shopping</a>
+        <a href="/deals" class="btn btn-outline">⚡ Today's Deals</a>
+        <a href="#" class="btn btn-outline"> Track Orders</a>
+        <a href="#" class="btn btn-outline"> Change Password</a>
+    </div>
+</div>

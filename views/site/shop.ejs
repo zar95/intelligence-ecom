@@ -1,0 +1,169 @@
+<!-- PAGE HEADER -->
+<div class="page-header">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li>Shop Collection</li>
+        </ul>
+        <h1 class="page-header-title">Shop Collection</h1>
+        <p class="page-header-sub">Premium tech gear and accessories — <strong style="color:var(--primary);">
+                <%= totalProducts %> products
+            </strong></p>
+
+        <% if (locals.searchQuery) { %>
+            <h2 style="margin-top: 1rem; color: var(--text-primary);">Search results for: "<%= searchQuery %>"</h2>
+            <% } %>
+    </div>
+</div>
+
+<div class="container" style="padding-bottom:4rem;">
+    <div class="shop-layout">
+
+        <!-- SIDEBAR FILTERS -->
+        <aside class="filter-sidebar">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;">
+                <div style="font-size:1rem;font-weight:800;">Filters</div>
+                <button
+                    style="background:none;border:none;color:var(--primary);font-family:'Manrope',sans-serif;font-size:0.8rem;font-weight:600;cursor:pointer;">Clear
+                    All</button>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-title">Category</div>
+                <% if (locals.categories) { %>
+                    <% categories.forEach(function(cat) { %>
+                        <a href="/shop?category=<%= cat.slug %>" class="filter-option"
+                            style="text-decoration:none; <%= (currentCategory === cat.slug) ? 'color:#13ec6d;' : '' %>">
+                            <%= cat.name %> (<%= cat.count %>)
+                        </a>
+                        <% }); %>
+                            <% } %>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-title">Price Range</div>
+                <div
+                    style="display:flex;justify-content:space-between;font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.25rem;">
+                    <span>$0</span><span id="priceDisplay">$500</span>
+                </div>
+                <input type="range" class="price-range-slider" min="0" max="2000" value="500"
+                    oninput="document.getElementById('priceDisplay').textContent='$'+this.value" />
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-title">Brand</div>
+                <label class="filter-option"><input type="checkbox" class="filter-checkbox" checked /> Lumina
+                    (432)</label>
+                <label class="filter-option"><input type="checkbox" class="filter-checkbox" /> Vision X (87)</label>
+                <label class="filter-option"><input type="checkbox" class="filter-checkbox" /> Sonic Stream (54)</label>
+                <label class="filter-option"><input type="checkbox" class="filter-checkbox" /> ProTech (121)</label>
+                <label class="filter-option"><input type="checkbox" class="filter-checkbox" /> NovaCam (66)</label>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-title">Rating</div>
+                <label class="filter-option"><input type="checkbox" class="filter-checkbox" /> 5 Stars (4.8+)</label>
+                <label class="filter-option"><input type="checkbox" class="filter-checkbox" checked /> 4 Stars
+                    (4.0+)</label>
+                <label class="filter-option"><input type="checkbox" class="filter-checkbox" /> 3 Stars (3.0+)</label>
+            </div>
+
+            <div class="filter-section" style="margin-bottom:0;">
+                <div class="filter-title">Availability</div>
+                <label class="filter-option"><input type="checkbox" class="filter-checkbox" checked /> In Stock
+                    Only</label>
+                <label class="filter-option"><input type="checkbox" class="filter-checkbox" /> On Sale</label>
+                <label class="filter-option"><input type="checkbox" class="filter-checkbox" /> Free Shipping</label>
+            </div>
+        </aside>
+
+        <!-- PRODUCT GRID -->
+        <div>
+            <!-- Sort Bar -->
+            <div
+                style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:0.75rem;">
+                <div style="font-size:0.875rem;color:var(--text-secondary);">Showing <strong
+                        style="color:var(--text-primary);">
+                        <%= (currentPage - 1) * limit + 1 %>–<%= Math.min(currentPage * limit, totalProducts) %>
+                    </strong> of <%= totalProducts %> results</div>
+                <div style="display:flex;gap:0.75rem;align-items:center;">
+                    <select
+                        style="background:var(--dark-card);border:1px solid var(--dark-border);color:var(--text-primary);padding:0.5rem 0.875rem;border-radius:var(--radius-sm);font-family:'Manrope',sans-serif;font-size:0.85rem;cursor:pointer;">
+                        <option>Sort: Featured</option>
+                        <option>Price: Low to High</option>
+                        <option>Price: High to Low</option>
+                        <option>Newest First</option>
+                        <option>Best Rating</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="product-grid">
+                <% products.forEach(function(p) { %>
+                    <a href="/product/<%= p.slug || p.id %>" class="card" style="display:block;">
+                        <div class="card-img" style="background: #1a2234; overflow: hidden;">
+                            <% if (p.mainImageUrl) { %>
+                                <img src="<%= p.mainImageUrl %>" alt="<%= p.name %>"
+                                    style="width:100%; height:100%; object-fit:cover;" />
+                                <% } else { %>
+                                    <div
+                                        style="display:flex;align-items:center;justify-content:center;height:100%;font-size:3.5rem;">
+                                        <%= p.icon || '📦' %>
+                                    </div>
+                                    <% } %>
+                        </div>
+                        <div class="card-body">
+                            <div
+                                style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+                                <span class="badge <%= p.badgeClass %>">
+                                    <%= p.badge %>
+                                </span>
+                                <span style="font-size:0.75rem;color:var(--primary);font-weight:700;">-<%= p.discount %>
+                                </span>
+                            </div>
+                            <div class="card-title">
+                                <%= p.name %>
+                            </div>
+                            <div class="card-subtitle">
+                                <%= p.brand %>
+                            </div>
+                            <div>
+                                <span class="card-price">
+                                    <%= p.price %>
+                                </span>
+                                <span class="card-price-old">
+                                    <%= p.was %>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                    <% }); %>
+            </div>
+
+            <!-- PAGINATION -->
+            <div style="display:flex;justify-content:center;gap:0.5rem;margin-top:2.5rem;">
+                <% if (currentPage> 1) { %>
+                    <a href="?page=<%= currentPage - 1 %><%= searchQuery ? '&q=' + searchQuery : '' %>"
+                        class="btn btn-outline btn-sm">← Prev</a>
+                    <% } else { %>
+                        <button class="btn btn-outline btn-sm" disabled>← Prev</button>
+                        <% } %>
+
+                            <% for(let i=1; i <=totalPages; i++) { %>
+                                <a href="?page=<%= i %><%= searchQuery ? '&q=' + searchQuery : '' %>"
+                                    class="btn <%= currentPage === i ? 'btn-primary' : 'btn-outline' %> btn-sm">
+                                    <%= i %>
+                                </a>
+                                <% } %>
+
+                                    <% if (currentPage < totalPages) { %>
+                                        <a href="?page=<%= currentPage + 1 %><%= searchQuery ? '&q=' + searchQuery : '' %>"
+                                            class="btn btn-outline btn-sm">Next →</a>
+                                        <% } else { %>
+                                            <button class="btn btn-outline btn-sm" disabled>Next →</button>
+                                            <% } %>
+            </div>
+        </div>
+
+    </div>
+</div>
