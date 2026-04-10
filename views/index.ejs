@@ -123,15 +123,14 @@
         <% flashProducts.forEach(function(product) { %>
           <a href="/product/<%= product.slug %>" style="text-decoration: none; color: inherit;">
             <div class="card">
-              <div class="card-img" style="background: #1a2234; overflow: hidden; height: 180px;">
+              <div class="card-img" style="background: var(--dark-lighter); overflow: hidden; height: 180px; position: relative;">
                 <% if (product.mainImageUrl) { %>
-                  <img src="<%= product.mainImageUrl %>" alt="<%= product.name %>"
-                    style="width:100%; height:100%; object-fit:cover;" />
-                  <% } else { %>
-                    <div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:3.5rem;">
-                      <%= product.icon || '📦' %>
-                    </div>
-                    <% } %>
+                  <img src="<%= product.mainImageUrl %>" alt="<%= product.name %>" style="width:100%; height:100%; object-fit:cover;" />
+                <% } else { %>
+                  <div style="display:flex;align-items:center;justify-content:center;height:100%;">
+                    <span style="font-size:3rem;font-weight:800;color:var(--text-muted);opacity:0.3;"><%= product.name ? product.name.charAt(0).toUpperCase() : '📦' %></span>
+                  </div>
+                <% } %>
               </div>
               <div class="card-body">
                 <% if (product.badge) { %>
@@ -169,24 +168,24 @@
 <!-- FEATURED PROMOS -->
 <section class="section" style="padding-top:0">
   <div class="container">
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem;">
-      <div
-        style="background:linear-gradient(135deg,rgba(124,111,255,0.15),rgba(19,236,109,0.08));border:1px solid var(--dark-border);border-radius:var(--radius-lg);padding:2rem;">
-        <div style="font-size:1.1rem;font-weight:800;margin-bottom:0.3rem;">Home Cinema</div>
-        <div style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:1rem;">Up to 40% Off</div>
-        <a href="/shop?category=cinema" class="btn btn-outline btn-sm">Shop Now →</a>
+    <div class="product-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+      <div class="promo-card promo-1">
+        <div class="promo-tag">Featured</div>
+        <div class="promo-title">Home Cinema</div>
+        <div class="promo-desc">Experience 4K clarity with up to 40% off the latest projectors and soundbars.</div>
+        <a href="/shop?category=cinema" class="btn btn-primary btn-sm" style="width: fit-content;">Shop Now →</a>
       </div>
-      <div
-        style="background:linear-gradient(135deg,rgba(19,236,109,0.12),rgba(0,180,100,0.06));border:1px solid rgba(19,236,109,0.2);border-radius:var(--radius-lg);padding:2rem;">
-        <div style="font-size:1.1rem;font-weight:800;margin-bottom:0.3rem;">Smartphones</div>
-        <div style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:1rem;">Flash Trade-ins</div>
-        <a href="/shop?category=phones" class="btn btn-outline btn-sm">Shop Now →</a>
+      <div class="promo-card promo-2">
+        <div class="promo-tag">New Season</div>
+        <div class="promo-title">Smartphones</div>
+        <div class="promo-desc">Trade in your old device and get up to $500 credit towards the new Lumina Pro.</div>
+        <a href="/shop?category=phones" class="btn btn-primary btn-sm" style="width: fit-content;">Explore Models →</a>
       </div>
-      <div
-        style="background:linear-gradient(135deg,rgba(255,165,2,0.1),rgba(255,71,87,0.06));border:1px solid var(--dark-border);border-radius:var(--radius-lg);padding:2rem;">
-        <div style="font-size:1.1rem;font-weight:800;margin-bottom:0.3rem;">Photography</div>
-        <div style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:1rem;">Bundle Savings</div>
-        <a href="/shop?category=photo" class="btn btn-outline btn-sm">Shop Now →</a>
+      <div class="promo-card promo-3">
+        <div class="promo-tag">Limited</div>
+        <div class="promo-title">Photography</div>
+        <div class="promo-desc">Save big on lens bundles and professional lighting gear this week only.</div>
+        <a href="/shop?category=photo" class="btn btn-primary btn-sm" style="width: fit-content;">View Bundles →</a>
       </div>
     </div>
   </div>

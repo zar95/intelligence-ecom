@@ -14,13 +14,21 @@
           <meta name="keywords" content="<%= metaKeywords %>" />
           <% } %>
             <title>Lumina E-Commerce</title>
-            <link rel="stylesheet" href="/stylesheets/style.css" />
+            <link rel="stylesheet" href="/stylesheets/style.css?v=<%= Date.now() %>" />
 </head>
 
 <body>
 
   <!-- NAVBAR -->
   <nav class="navbar">
+    <button class="mobile-menu-toggle" id="mobile-toggle">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
     <a href="/" class="navbar-brand">Lumina</a>
     <ul class="navbar-nav">
       <li><a href="/" class="<%= currentPath === '/' ? 'active' : '' %>">Home</a></li>
@@ -71,6 +79,21 @@
           <% } %>
     </div>
   </nav>
+
+  <!-- MOBILE NAV -->
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="/" class="<%= currentPath === '/' ? 'active' : '' %>">Home</a>
+    <a href="/shop" class="<%= currentPath === '/shop' ? 'active' : '' %>">Shop</a>
+    <a href="/deals" class="<%= currentPath === '/deals' ? 'active' : '' %>">Deals</a>
+    <hr style="border: 0; border-top: 1px solid var(--dark-border); margin: 0.5rem 0;">
+    <% if (locals.role==='admin' ) { %>
+      <a href="/admin">Admin Panel</a>
+      <a href="/toggle-role">Client Mode</a>
+      <% } else { %>
+        <a href="/login">Log In</a>
+        <a href="/register">Sign Up</a>
+        <% } %>
+  </div>
 
   <%- body %>
 
@@ -204,6 +227,21 @@
         }, 1000);
       }
       startCountdown(new Date().getTime() + 86400000);
+
+      // Mobile Toggle Script
+      const mobileToggle = document.getElementById('mobile-toggle');
+      const mobileNav = document.getElementById('mobile-nav');
+      if (mobileToggle && mobileNav) {
+        mobileToggle.addEventListener('click', () => {
+          mobileNav.classList.toggle('open');
+        });
+        // Close menu on link click
+        mobileNav.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            mobileNav.classList.remove('open');
+          });
+        });
+      }
     </script>
 </body>
 

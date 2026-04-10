@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const config = require('config');
 
-module.exports = function() {
+module.exports = function () {
   const db = process.env.MONGODB_URI || config.get('db') || 'mongodb://localhost/lumina';
   mongoose.connect(db, {
     useNewUrlParser: true,
